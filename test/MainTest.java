@@ -60,5 +60,26 @@ class MainTest {
     );
   }
 
+
+
   // TODO: Create your test(s) below. /////////////////////////////////////////
+  @Test
+  public void getId() {
+      // Set up the database connection
+      Connection connection = null;
+      try {
+          connection = DriverManager.getConnection("jdbc:sqlite::memory:");
+      } catch (SQLException e) {
+          fail("Failed to create an in-memory database connection.");
+      }
+
+      // Test with a word containing a single quote
+      String wordWithSingleQuote = "can't";
+      try {
+          int id = Main.getId(connection, wordWithSingleQuote);
+          assertEquals(-1, id, "ID should be -1 for word containing a single quote");
+      } catch (SQLException e) {
+          fail("Exception occurred during getId: " + e.getMessage());
+      }
+  }
 }
